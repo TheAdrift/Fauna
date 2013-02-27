@@ -1,0 +1,36 @@
+The purpose of the document is to act as a pool for general notes, hypotheticals and queries into potential gameplay angles for Fauna. Because this is both and active an a historic repository, ideas that are rejected should not be deleted from the file, but marked with the [ unused ] tag, indicating that we've moved on from the idea. General idea being: if we get stumped, we can come back here, look at all the features we proposed and threw out. 
+
+=================================
+
+Rougelike Gampeplay Hook - 2/26/2013
+Idea here was that we approach the gameplay from a near rougelike perspective. This was dual purpose in design - first to make the game more implementeable and second to give the player clear input-output for how their actions were affecting the environment by actually synching the environment to the same clock the player moves on.
+
+Team discussed this idea, and the consensus was that this would slow gameplay too much. We are wanting the player to be more active in the world - running, jumping, climbing trees etc. Idea was coupled with a few strategic aspects of gameplay that could potentially be repurposed for other gameplay styles. 
+
+Tags: [ Unused ] 
+
+=================================
+
+Predator Behaviour: Territory Roaming/Marking - 2/26/2013
+Idea here is that predators, as they roam about, mark their territory. As such, a player is in more danger of attracting a predator's attention if they are in this territory. This could be used both as a mechanic to cause menace to the player (requiring them to cross predator territory) and as a tool (luring other critters into predator territory) or as a strategic move (luring a predator to establish a territory to form a defensive perimiter). 
+
+Tags: [ Potential  Use ] 
+
+=================================
+
+Access Restriction based on Entity Type - 2/26/2013
+Idea here is that in addition to basic territory types of [flora-controlled-territory | fungi-controlled-territory] there would also be an orthagonal type of territory that only certain types of entities could access. For example, tunnels, etc, that predators don't have access to, or control shafts that only the player can get at. This allows for the player to not have to be taking into account every single type of entity at every single second. 
+
+Tags: [ Potential Use ] 
+
+=================================
+
+Room-by-Room Environment Management - 2/26/2013
+Idea here is there is one room (the player-occupied room) that is 'active' at a given time. This allows the player to engage with the local wildlife in whatever way they choose, while the game keeps track of the metadata of the other rooms by crunching numbers. It is very likely we will use this idea, because otherwise the resources required to keep all rooms in 'active' state, and calculating the actions of all entities at all times will be prohibitive. 
+
+There are some issues here that come to mind that we will need to think about. These issues include - 
+  - The player will be able to move between rooms, but will the flora/fauna? If yes, then that can become quite complicated, because computer will have to keep track of not only populations within the rooms themselves, but will have to calculate traversals between all rooms. On the other hand, if they can't move between rooms, then each room becomes a miniature closed environment barring what the player brings in/out. Possibly this could be a major gameplay hook - running critters from room to room to preserve the peace? 
+  - How to maintain a persistent feel to environment? If player leaves a room with all bunnies on northeast side, and then comes back into room and bunnies have been automatically repopulated on the middle of the field, is that going to break the imersion? Are we okay with that cost? 
+  - How big are these rooms. We want them to be big enough for strategic play, especially if each one is self-contained. That said, that becomes a difficult balancing act. As these going to be dynamically generated rooms, or are they going to be carefully designed? 
+
+Tags: [ Likely Use ] 
