@@ -1,4 +1,21 @@
-﻿February 23, 2013
+﻿March 4, 2013 *UPDATE*
+
+v0.000___________________________________
+
+Added a movement engine test as a Construct 2 project folder and as a compressed .capx file. Download either to preview them in Construct 2 (stable release 119).
+
+The compressed file is: v0_00_test.capx
+
+Test includes some colored boxes to represent collision detectors and a couple objects with the "Solid" property for funsies.
+
+Relevant variables and event sheets are accessible through Construct 2.
+
+For now, use space to jump and arrow keys to move. We'll hook these into a more flexible control scheme later.
+
+_________________________________________TheAdrift
+
+
+February 23, 2013
 
 v0.000___________________________________
 
