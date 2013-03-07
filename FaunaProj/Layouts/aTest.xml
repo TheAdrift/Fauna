@@ -112,11 +112,11 @@
                     <blend-mode>0</blend-mode>
                     <effect-fallback>0</effect-fallback>
                     <world>
-                        <x>372</x>
-                        <y>304</y>
+                        <x>16</x>
+                        <y>16</y>
                         <z>0</z>
-                        <width>34</width>
-                        <height>34</height>
+                        <width>32</width>
+                        <height>32</height>
                         <depth>0</depth>
                         <hotspotX>0.5</hotspotX>
                         <hotspotY>0.5</hotspotY>
@@ -133,7 +133,7 @@
                         <edges>Tile</edges>
                         <fill>Tile</fill>
                         <initial-visibility>Visible</initial-visibility>
-                        <hotspot>Center</hotspot>
+                        <hotspot>Top-left</hotspot>
                     </properties>
                     <behavior-instances>
                         <behavior-instance type="Solid" />
@@ -141,14 +141,14 @@
                     <blend-mode>0</blend-mode>
                     <effect-fallback>0</effect-fallback>
                     <world>
-                        <x>532</x>
-                        <y>390</y>
+                        <x>0</x>
+                        <y>384</y>
                         <z>0</z>
                         <width>96</width>
                         <height>96</height>
                         <depth>0</depth>
-                        <hotspotX>0.5</hotspotX>
-                        <hotspotY>0.5</hotspotY>
+                        <hotspotX>0</hotspotX>
+                        <hotspotY>0</hotspotY>
                         <opacity>1</opacity>
                     </world>
                 </instance>
@@ -161,7 +161,7 @@
                         <edges>Tile</edges>
                         <fill>Tile</fill>
                         <initial-visibility>Visible</initial-visibility>
-                        <hotspot>Center</hotspot>
+                        <hotspot>Top-left</hotspot>
                     </properties>
                     <behavior-instances>
                         <behavior-instance type="Solid" />
@@ -169,14 +169,14 @@
                     <blend-mode>0</blend-mode>
                     <effect-fallback>0</effect-fallback>
                     <world>
-                        <x>477</x>
-                        <y>606</y>
+                        <x>160</x>
+                        <y>368</y>
                         <z>0</z>
                         <width>490</width>
                         <height>258</height>
                         <depth>0</depth>
-                        <hotspotX>0.5</hotspotX>
-                        <hotspotY>0.5</hotspotY>
+                        <hotspotX>0</hotspotX>
+                        <hotspotY>0</hotspotY>
                         <opacity>1</opacity>
                     </world>
                 </instance>

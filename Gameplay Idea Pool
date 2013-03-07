@@ -34,3 +34,19 @@ There are some issues here that come to mind that we will need to think about. T
   - How big are these rooms. We want them to be big enough for strategic play, especially if each one is self-contained. That said, that becomes a difficult balancing act. As these going to be dynamically generated rooms, or are they going to be carefully designed? 
 
 Tags: [ Likely Use ] 
+
+Discussion: [Cam 3/06/13] I'm willing to accept a few hiccups in terms of entity placement on reloading a room so long as the overall effect is one of gradual, persistent change. Depending on implementation, it might be possible to store entity locations for the most recent room loaded, so if a player runs through a door and runs back through it immediately afterward there's no hiccup. I can't see anything more persistent than that becoming necessary, and even that is negligible. We are all used to enemies simply respawning on entering and exiting a room, as a convention.
+
+[Cam 3/06/13] Yes, flora and fauna should be able to move between rooms, but I think we can find a compromise. I like that hook you proposed; perhaps we can implement it in terms of the entity ai itself? I.e., if a predator is stalking the player, and is within a certain distance when the player exits the room by a sufficiently large door (but does not seal the door shut behind them), after a certain time the new room will spawn that predator at the door, and the prior room's predator population would decrement. This could play into the idea we discussed earlier, about certain entities having access to certain passages. Could we perhaps treat each room as a node, with specific other rooms connected to it, with each connection having a particular "strength" or probability of allowing entities through?
+
+[Cam 3/06/13] Dynamically generated would be conceptually cool, but frankly is too much back-end work and probably edging into too much front-end calculation. Creating the dynamic environment and making it behave well is likely challenging enough. Besides, desinging the rooms ourselves gives us more control over traversal challenges.
+
+=================================
+
+Inverted Player Empowerment - 3/06/2013
+
+The notion here is to invert the usual trope of increasing player "power," e.g. new abilities that shortcut former problems and, conversely, increasing the power of enemies to provide challenge. Instead, the player avatar begins the game decently well equipped, but gradually loses abilities and shortcuts, or runs out of limited resources, supplanting them with skills and strategies learned by the player over the course of play. The challenges posed by the environment, after an initial ramp-up, remain fundamentally the same, allowing challenge to evolve organically.
+
+A trivial example: the player begins with a suit and breathing mask that allows her to traverse fungal growth without taking damage. Eventually, the fungus dissolves a seal which cannot be repaired, and the player takes damage while traversing fungal territory.
+
+Tags: [ Potential Use ]
