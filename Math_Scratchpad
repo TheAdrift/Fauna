@@ -1,0 +1,198 @@
+// Maths and Pseudocode
+
+--// In lieu of a final decision on engine and implementation, I've 
+created this document as a way to represent the relevant maths and
+functions for our game loop in an abstract and implementation-agnostic 
+form.
+
+Hopefully this will ease the transition into whatever tool we 
+eventually settle on. As an added benefit, this could help us keep the 
+project well-documented, and perhaps also allow us to re-implement
+or port the project to another codebase later on. 
+
+Feel free to query, comment, change or otherwise alter the document.//--
+
+--// NOTA BENE: These are not guaranteed to be organized in a manner
+that would make sense at runtime. This is a notebook, where functions, 
+logic, and structures can be sketched out and hacked apart collabora-
+-tively. However, at the beginning of this document we should include 
+a list of shorthand var. and function names, with brief descriptions, 
+for convention, convenience, and to stave off massive head trauma. //--
+
+//List O' vars
+bools:
+	inAir	// For jumping and falling mechanics. Should be True when 
+			// player is in the air for any reason.
+
+	**isJump	// Should be true only during a player-initiated jump.
+			// In case we need to differentiate that state of affairs.**
+
+	isCrouch	// True while the player is in a stealthy state.
+
+	isDash	// True while player is running/dashing. **QUERY: should we
+			// split that into separate run and dash states?**
+
+ints and floats:
+	dT		// "delta Time." A convenient way of representing game time 
+			// since last tick. For framerate independent calculations.
+
+	height	// For jumping and falling mechanics. Represents altitude of
+			// player as vertical distance, in pixels, between player
+			// avatar and floor collider.
+
+	grav	// For jumping and falling mechanics. Represents gravity
+			// in a given room.
+	
+	jumpSpeed	// For jumping and falling mechanics. Represents the
+			// upward speed of the player.
+
+	moveSpeed	// For moving the player around. Represents the speed,
+			// in pixels per second, that the player moves unmodified.
+
+	speed	// To simplify movement logic. Represents player speed, in
+			// pixels per second, after modification.
+
+//List O' functs
+
+//Other objects
+clockTick:
+	one tick of game time.
+
+rect:
+	a polygon with four corners.
+	Has properties:
+		this.position 	// position coordinates {x, y} in pixels.
+			this.X		// position coordinate {x}
+			this.Y		// position coordinate {y}
+		this.size		// dimensions {Width, Height} in pixels.
+			this.Width	// dimension {Width} in pixels.
+			this.Height	// dimension {Height} in pixels.
+	Has methods:
+		move this {x, y}
+
+	floorCollider:
+		inherits from rect. Invisible. Represents the player's position  
+		on the floor, as though it were the player's shadow.
+
+	playerCollider:
+		inherits from rect. Invisible. Represents the player's position,
+		onto which the player's sprite is placed.
+
+	solid:
+		inherits from rect. Invisible. A tile which resists movement.
+	
+	walkThru:
+		inherits from rect. A tile which permits movement.
+		
+		air:
+			inherits from walkThru. Permits movement, but triggers an
+			"is inAir" or "isFalling" event.
+	
+	**other tile types here?**
+
+sprite:
+	an image displayed with aplha transparency. Inherits from rect.
+	--//Has additional properties:
+		this.image		// points to source image for the current
+						// animation frame.
+		this.anim		// identifies current animation.
+		this.animFrame	// zero index of current animation frame.
+		this.animPlaying// boolean; true if animation is playing.//--
+
+
+// Movement
+
+// NB: these aren't properly structured, named functions, just notes.
+			--// for reference, {0,0} is at top right of window,
+				x increases left to right,
+				y increases top to bottom. //--
+every clockTick:
+	{
+		playerCollider.X = floorCollider.X
+		playerCollider.Y = floorCollider.Y - height - (playerCollider.Height/2)
+	}
+	{
+		height = height + (jumpSpeed * dT)
+	}
+
+while height <= 0:	// Inequality used to catch discrepancies in physics
+					// steps if there are any.
+	{
+		height = 0
+		jumpSpeed = 0
+        inAir = false
+	}
+
+gravity:
+	{
+	while inAir === true:
+		{
+			jumpSpeed = jumpSpeed - (grav * dT)
+		}
+	}
+
+jump:
+	{
+	on [keyJump]_down:
+		{
+			jumpSpeed = jumpStrength
+			inAir = True
+		}
+	}
+	
+moving:		--// Most engines I've looked at have some way of handling 
+movement in 8 compass directions with equal magnitude, but in case we 
+have to write one from scratch, this should be the right math. Formula
+for the diagonals are worked out from the Pythagorean theorem assuming
+equal legs. //--
+
+if isDash === true:
+    {
+        speed = moveSpeed * 2
+    }
+else if isCrouch === true:
+    {
+        speed = moveSpeed / 2
+    }
+else:
+    {
+        speed = moveSpeed
+    }
+
+switch: [button]_down
+    case [moveLeft]:
+        {
+            floorCollider.X = floorCollider.X - (speed * dT)
+        }
+    case [moveRight]:
+        {
+            floorCollider.X = floorCollider.X + (speed * dT)
+        }
+    case [moveUp]:
+        {
+            floorCollider.Y = floorCollider.Y - (speed * dT)
+        }
+    case [moveDown]:
+        {
+            floorCollider.Y = floorCollider.Y + (speed * dT)
+        }
+    case [moveUp && moveLeft]:
+        {
+            floorCollider.X = floorCollider.X - (sqrt((speed^2)/2) * dT)
+            floorCollider.Y = floorCollider.Y - (sqrt((speed^2)/2) * dT)
+        }
+    case [moveUp && moveRight]:
+        {
+            floorCollider.X = floorCollider.X + (sqrt((speed^2)/2) * dT)
+            floorCollider.Y = floorCollider.Y - (sqrt((speed^2)/2) * dT)
+        }
+    case [moveDown && moveRight]:
+        {
+            floorCollider.X = floorCollider.X + (sqrt((speed^2)/2) * dT)
+            floorCollider.Y = floorCollider.Y + (sqrt((speed^2)/2) * dT)
+        }
+    case [moveDown && moveLeft]:
+        {
+            floorCollider.X = floorCollider.X - (sqrt((speed^2)/2) * dT)
+            floorCollider.Y = floorCollider.Y + (sqrt((speed^2)/2) * dT)
+        }
