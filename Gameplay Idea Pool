@@ -41,6 +41,8 @@ Discussion: [Cam 3/06/13] I'm willing to accept a few hiccups in terms of entity
 
 [Cam 3/06/13] Dynamically generated would be conceptually cool, but frankly is too much back-end work and probably edging into too much front-end calculation. Creating the dynamic environment and making it behave well is likely challenging enough. Besides, desinging the rooms ourselves gives us more control over traversal challenges.
 
+[David 3/11/13] I like the second note above, where player behaviour is capable of causing creatures to automatically move between spaces. I also agree with the third - random room generation is not the way to go for this project. Generally speaking, if we are going to be investing heavily in player movement system, we don't want to be relying on a dumb algorithm to generate the challenges. 
+
 =================================
 
 Inverted Player Empowerment - 3/06/2013
@@ -50,3 +52,31 @@ The notion here is to invert the usual trope of increasing player "power," e.g. 
 A trivial example: the player begins with a suit and breathing mask that allows her to traverse fungal growth without taking damage. Eventually, the fungus dissolves a seal which cannot be repaired, and the player takes damage while traversing fungal territory.
 
 Tags: [ Potential Use ]
+
+Discussion: [David 3/11/13] This is an interesting idea, but tricky. What I think we need to do before progressing with this idea is come up with some concrete features that we want to include in the game, and then decide which of those are core to the game mechanics that we want to maintain for the duration, and which could be shed. From previous conversations, I think we are on generally the same page here, but I'll formalize: 
+
+If we generalize the sorts of tools that one gets in these sorts of exploration game, they are: potective tools (e.g. varia suite), destructive tools (super missiles) and navigational/traversal tools (hi-jump boots, grapple beam). Given that we are more interested in traversal/avoidance in the gameplay hooks, I would say that the destructive and protective tools would be the more extranous tools, while the traversal tools would be more critical. 
+
+This jives well with a general sense I have of game design that goes: the more ways I can move around the world effectively, the better I feel. I'm not sure I like the idea of taking away those types of tools. As an example, take Castlevania: SotN if it had this reverse power structure: You've got a badass sword, Crissaegrim. You've got the ultimate defensive combo, Shield Rod + Alucard Shield. You start the game with these, and are an untouchable badass, until you eventually lose them. Then you get used to legit sword and shield tactics, you're still strong, but more effort is required now. Eventually, you're fighting the last boss with a dagger, and he's balls hard because you have to actually play the game well. 
+
+Now imagine the same, only halfway through the game you lose the ability to double jump. Then you can't backdash anymore a little while later. Eventually the only movement you have is a small single jump and the ability to walk slowly back and forth, a la old-style castlevania games. Fuck that shit, I would have stopped playing when I lost my double jump. I LIKE my double jump. 
+
+Poing is, in my opinion, taking away combat extras or life tanks, etc., is a good way to get a player to buckle down and play better. Taking away fun traversal tools is a good way to make me decide this isn't fun anymore and stop playing. 
+
+===================================================
+
+3/11/13 - Narrative Conceit
+
+After conversation with team, proposed idea is that the player avatar has somehow arrived (crashed ???) at an alien zoo hosting a variety of critters and environments. The player will make a mess of things, primarily by releasing from its own natural ecosystem a fungus that, when introduced to the other ecosystems, begins rapid takeover. Player has some goal that forces them to traverse the zoo, but in the processes the ecosystems go FUBAR, cats and dogs living together, mass hystaria, etc. The player is then given some impetus to restore the environment, not by re-containing everything, but by establishing some equilibrium to the larger ecosystem. This results in the player being able to leave the zoo. 
+
+Discussion [ David 3/11/13 ] - So my thought here is to simplify it a bit: 
+
+Player arrives at the zoo, with a distressed vehicle, not actually crashed. While trying to repair, he/she manages to unleash the fungus from its native environment, and it immediately starts to spread. This initiates a lockdown procedure, trapping the player in the zoo (away from the ship) and in the now-quite-toxic atmosphere of the fungus. In order to escape the fungus, the player begins to break down barriers and flee through the rest of the zoo. 
+
+The thought being: for the first half of the game, the player isn't concerned with balancing ecosystems or exploration, but with escape and surviveal. So the territory where the player has been (and thus exposed to corruption) is the chaotic territory where ecosystem simulation/number crunching is happening, and the territory where the player is headed into is pristine (this allowing us to present some more crafted, controlled environments to the player as well). While this escape is happening, we are taking away the destructive and protective tools from the player, forcing them to play smarter and safer as the escape takes place. 
+
+This also allows us to still have an incentive to find the next thing and go to the next place. In Metroid, each new area tends to end with a new upgrade - but as dicussed above we're not really doing that. What we could have is each new area explored adds new species to the chaoric new ecosystem forming in your wake. So you're not unlocking new personal tools, you're unlocking new environmental elements. 
+
+Eventually, the player attains some vague semblance of safety. This presumably is after reaching the end of the zoo, at which poing the environment is so chaotic and integrated that the fungus is, while still a threat, held at bay by the other life that has been introduced to the environment. The ecosystem is now fully integrated rather than segregated, but also unstable. The player realizes (hopefully!) that the only way to end the lockdown and thus get back to the ship is to stabilize this new ecosystem that he or she has accidentally created. Luckily the player has an advantage here: while all their original tools they had to help them are now gone, they know the terrain - after all, it's the same terrain they've traversed for the first half of the game. 
+
+This is just a thought. What are yours? 
