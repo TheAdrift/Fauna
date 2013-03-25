@@ -51,6 +51,14 @@ ints and floats:
 
 	speed	// To simplify movement logic. Represents player speed, in
 			// pixels per second, after modification.
+    
+    x_vel   // amount added to x position every tick.
+            // Positive (+) values = moving right
+            // Negative (-) values = moving left
+    
+    y_vel   // amount added to y position every tick.
+            // Positive (+) values = moving down
+            // Negative (-) values = moving up
 
 //List O' functs
 
@@ -61,13 +69,16 @@ clockTick:
 rect:
 	a polygon with four corners.
 	Has properties:
-		this.position 	// position coordinates {x, y} in pixels.
+		this.position 	// position coordinates {x, y} in pixels
+                        // measured from top left corner.
 			this.X		// position coordinate {x}
 			this.Y		// position coordinate {y}
 		this.size		// dimensions {Width, Height} in pixels.
 			this.Width	// dimension {Width} in pixels.
 			this.Height	// dimension {Height} in pixels.
-	Has methods:
+        this.x_vel      // velocity, in pixels per second, along x-axis.
+        this.y_vel      // velocity, in pixels per second, along y-axis.
+    Has methods:
 		move this {x, y}
 
 	floorCollider:
@@ -81,13 +92,16 @@ rect:
 	solid:
 		inherits from rect. Invisible. A tile which resists movement.
 	
-	walkThru:
-		inherits from rect. A tile which permits movement.
+	floor:
+		inherits from rect. Invisible. A tile which permits movement.
 		
 		air:
 			inherits from walkThru. Permits movement, but triggers an
 			"is inAir" or "isFalling" event.
 	
+    slope:
+        inherits from rect. Invisible. A tile with an embedded slope segment.
+    
 	**other tile types here?**
 
 sprite:
@@ -107,9 +121,27 @@ sprite:
 				x increases left to right,
 				y increases top to bottom. //--
 every clockTick:
-	{
+    {   if: player.x_vel > speed:{
+            player.x_vel = speed
+            }
+        else if: player.x_vel < -speed:{
+            player.x_vel = -speed
+            }
+    }
+    {   if: player.y_vel > speed:{
+            player.y_vel = speed
+            }
+        else if: player.y_vel < -speed:{
+            player.y_vel = -speed
+            }
+    }
+    {
+        floorCollider.X = floorCollider.X + player.x_vel
+        floorCollider.Y = floorCollider.Y + player.x_vel
+    }
+    {
 		playerCollider.X = floorCollider.X
-		playerCollider.Y = floorCollider.Y - height - (playerCollider.Height/2)
+		playerCollider.Y = floorCollider.Y - height - (playerCollider.Height/2) + (floorCollider.Height/2)
 	}
 	{
 		height = height + (jumpSpeed * dT)
@@ -162,37 +194,127 @@ else:
 switch: [button]_down
     case [moveLeft]:
         {
-            floorCollider.X = floorCollider.X - (speed * dT)
+            player.x_vel = (-speed)*dT
         }
     case [moveRight]:
         {
-            floorCollider.X = floorCollider.X + (speed * dT)
+            player.x_vel = speed*dT
         }
     case [moveUp]:
         {
-            floorCollider.Y = floorCollider.Y - (speed * dT)
+            player.y_vel = (-speed)*dT
         }
     case [moveDown]:
         {
-            floorCollider.Y = floorCollider.Y + (speed * dT)
+            player.y_vel = speed*dT
         }
     case [moveUp && moveLeft]:
         {
-            floorCollider.X = floorCollider.X - (sqrt((speed^2)/2) * dT)
-            floorCollider.Y = floorCollider.Y - (sqrt((speed^2)/2) * dT)
+            player.x_vel = -(sqrt((speed^2)/2) * dT)
+            player.y_vel = -(sqrt((speed^2)/2) * dT)
         }
     case [moveUp && moveRight]:
         {
-            floorCollider.X = floorCollider.X + (sqrt((speed^2)/2) * dT)
-            floorCollider.Y = floorCollider.Y - (sqrt((speed^2)/2) * dT)
+            player.x_vel = (sqrt((speed^2)/2) * dT)
+            player.y_vel = -(sqrt((speed^2)/2) * dT)
         }
     case [moveDown && moveRight]:
         {
-            floorCollider.X = floorCollider.X + (sqrt((speed^2)/2) * dT)
-            floorCollider.Y = floorCollider.Y + (sqrt((speed^2)/2) * dT)
+            player.x_vel = (sqrt((speed^2)/2) * dT)
+            player.y_vel = (sqrt((speed^2)/2) * dT)
         }
     case [moveDown && moveLeft]:
         {
-            floorCollider.X = floorCollider.X - (sqrt((speed^2)/2) * dT)
-            floorCollider.Y = floorCollider.Y + (sqrt((speed^2)/2) * dT)
+            player.x_vel = -(sqrt((speed^2)/2) * dT)
+            player.y_vel = (sqrt((speed^2)/2) * dT)
         }
+
+Rough algorithm for slope detection:
+
+1. Does player floor hitbox collide with a slope tile?
+2. What kind of slope?
+
+   D|  /+|B	a. Up-Left slope
+    | /++|	m is +
+   A|/+++|C	y >= m*x + b is permitted; y < m*x + b is a collision
+
+   A|+\  |D	b. Up-Right slope
+    |++\ |	m is -
+   C|+++\|B	y <= m*x + b is permitted; y > m*x + b is a collision
+
+   C|+++/|B	c. Down-Right slope
+    |++/ |	m is +
+   A|+/  |D	y <= m*x + b is permitted; y > m*x = b is a collision
+
+   A|\+++|C	d. Down-Left slope
+    | \++|	m is -
+   D|  \+|B	y >= m*x + b is permitted; y < m*x + b is a collision
+
+	Line equation:
+		y = m*x + b
+		x = (y-b)/m
+		b = A.y - m* A.x
+		b = A.y - ((A.y-B.y)/(A.x-B.x))*A.x
+
+	Some facts about slope m:
+		m = h/w = dh/dw
+		h = A.y-B.y ; w = A.x-B.x
+		dh = h/gcd(h, w)
+		dw = w/gcd(h, w)
+		c^2 = dh^2 + dw^2
+		c = sqrt(dh^2 + dw^2)
+
+	Scaling movement speed along slope:
+		similarity: tri_ABC ||| tri_dh,dw,c ||| tri_dX,dY,Speed
+		dX/dw = dY/dh = Speed/c
+		dX = (Speed/c)*dW
+		dY = (speed/c)*dH
+
+3. Check if player.Y >|=|< m * player.X + b
+Ideally, we would then:
+	1. Find point of collision I(x, y):
+		Finding point of collision should be a matter of solving a system of equations.
+        Specifically, finding the intersection of two line segments:
+        The slope segment, AB
+        The line segment P'P between the Player's current position P(X, Y) and previous P'(X', Y')
+        
+        P'.x = player.x - player.x_vel
+        P'.y = player.y - player.x_vel
+        
+        slope line:
+
+        y = ((A.y-B.y)/(A.x-B.x))*x + (A.y - ((A.y-B.y)/(A.x-B.x))*A.x)
+        y = m*x + b
+
+        player line: (unless P.x = P'.x; then x = P.x)
+
+        y = ((P'.y-P.y)/(P'.x-P.x))*x + (P.y - ((P'.y-P.y)/(P'.x-P.x))*P.x)
+        y = m'*x + b'
+
+        Intersection I(x, y)
+
+        If P.x = P'x, then I.x = P.x (skip below)
+        If m = m', then lines are parallel and there was no collision.
+
+        m*x + b = m'*x + b'
+        m*x - m'*x = b - b'
+        (m - m')x = b - b'
+
+        I.x = (b - b')/(m - m')
+        I.y = m*I.x + b
+
+	2. Find time "T" since collision
+		player.x_vel is change in player.X per second
+		player.y_vel is change in player.Y per second
+
+		T = (P.x - I.x)/player.x_vel or (P.y - I.y)/player.y_vel
+
+	3. Determine if player is moving "into" slope, and in what direction.
+
+	4. Find the position player would have travelled to since collision along slope m in time "T"
+	Move player to that position.
+
+		set player.X = I.x +|- dX*T
+		set player.Y = I.y +|- dY*T
+
+This resolves issues wherein point moves too far between ticks to register collision exactly.
