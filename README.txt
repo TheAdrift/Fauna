@@ -1,16 +1,12 @@
-﻿March 4, 2013 *UPDATE*
+﻿April 6, 2013 *UPDATE*
 
 v0.000___________________________________
 
-Added a movement engine test as a Construct 2 project folder and as a compressed .capx file. Download either to preview them in Construct 2 (stable release 119).
+Going forward, we are no longer using the Construct2 engine, so I have removed the relevant files. 
 
-The compressed file is: v0_00_test.capx
+As of now the team is deciding between Unity3D with a 2-d toolkit such as Orthello, and the LÖVE framework. I've created empty "../assets" and "../maps" directories since both of the above solutions can leverage similar assets, including the TILED map editor.
 
-Test includes some colored boxes to represent collision detectors and a couple objects with the "Solid" property for funsies.
-
-Relevant variables and event sheets are accessible through Construct 2.
-
-For now, use space to jump and arrow keys to move. We'll hook these into a more flexible control scheme later.
+Added Zoetrope library files ( http://libzoetrope.org ) for development with LÖVE engine ( http://love2d.org ). "main.lua" is ready for editing, though not edited yet. I'll write a movement script to replace it for the next update.
 
 _________________________________________TheAdrift
 
