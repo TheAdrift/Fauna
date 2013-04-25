@@ -108,6 +108,7 @@ FloorCollider = Fill:extend
 					--accelerate due North
 					self.minVelocity.y = -(self.maxSpeed)
 					self.acceleration.y = -(self.accel)
+                    self.acceleration.x = 0
 					state.faces = "N"
 				end
 
@@ -129,6 +130,7 @@ FloorCollider = Fill:extend
 					--accelerate due South
 					self.maxVelocity.y = self.maxSpeed
 					self.acceleration.y = self.accel
+                    self.acceleration.x = 0
 					state.faces = "S"
 				end
 
@@ -136,12 +138,14 @@ FloorCollider = Fill:extend
 				--accelerate due East
 				self.maxVelocity.x = self.maxSpeed
 				self.acceleration.x = self.accel
+                self.acceleration.y = 0
 				state.faces = "E"
 
 			elseif the.keys:pressed (push.left) and not the.keys:pressed (push.right) then
 				--accelerate due West
 				self.minVelocity.x = -(self.maxSpeed)
 				self.acceleration.x = -(self.accel)
+                self.acceleration.y = 0
 				state.faces = "W"
 
 			else
