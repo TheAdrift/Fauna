@@ -39,7 +39,7 @@ state =
 --a dictionary for some default values we may like to reference.
 default =
 {
-	accel = 800,
+	accel = 1000,
 	maxSpeed = 300, --player accelerates to this. Doubled when dashing, halved when crouched.
 	gravity = 1600, --downward acceleration while player is inAir.
 	jumpForce = 600, --upward force when player first jumps.
@@ -89,7 +89,11 @@ FloorCollider = Fill:extend
 			self.maxSpeed = default.maxSpeed
 		end
 
-		if not state.isDodge then
+		if state.isDodge then
+            self.acceleration = {x = 0, y = 0}
+            
+        else
+        
 			if the.keys:pressed (push.up)then
 				if the.keys:pressed (push.right) and not the.keys:pressed (push.left) then
 					--accelerate NE
@@ -154,10 +158,6 @@ FloorCollider = Fill:extend
 				self.minVelocity = {x = -self.maxSpeed, y = -self.maxSpeed}
 				self.acceleration = {x = 0, y = 0}
 			end
-		else
-			--cancel x- and y-acceleration
-			self.acceleration = {x = 0, y = 0}
-		
 		end
 		
 		--Dodging
@@ -184,44 +184,44 @@ FloorCollider = Fill:extend
 		if the.keys:justPressed (push.dodge) and not state.isDodge and not state.inAir then
 			state.isDodge = true
 			state.queue = .5
-			--the.app.pBody.jumpSpeed = default.jumpForce/2
-			--state.inAir = true
+			the.app.pBody.jumpSpeed = default.jumpForce/3
+			state.inAir = true
 			
 			--get direction player is facing.
 			if state.faces == "N" then
 				--dodge appropriately.
-				self.minVelocity.y = - self.dodge
-				self.velocity.y = - self.dodge
+				self.minVelocity.y = self.minVelocity.y - self.dodge
+				self.velocity.y = self.velocity.y - self.dodge
 
 			elseif state.faces == "S" then
-				self.maxVelocity.y = self.dodge
-				self.velocity.y = self.dodge
+				self.maxVelocity.y = self.maxVelocity.y + self.dodge
+				self.velocity.y = self.velocity.y + self.dodge
 
 			elseif state.faces == "W" then
-				self.minVelocity.x = - self.dodge
-				self.velocity.x = - self.dodge
+				self.minVelocity.x = self.minVelocity.x - self.dodge
+				self.velocity.x = self.velocity.x - self.dodge
 			
 			elseif state.faces == "E" then
-				self.maxVelocity.x = self.dodge
-				self.velocity.x = self.dodge
+				self.maxVelocity.x = self.maxVelocity.x + self.dodge
+				self.velocity.x = self.velocity.x + self.dodge
 			
 			elseif state.faces == "NW" then
-				self.minVelocity = {x = -math.sqrt((self.dodge^2)/2), y = -math.sqrt((self.dodge^2)/2)}
-				self.velocity = {x = -math.sqrt((self.dodge^2)/2), y = -math.sqrt((self.dodge^2)/2)}
+				self.minVelocity = {x = self.minVelocity.x -math.sqrt((self.dodge^2)/2), y = self.minVelocity.y -math.sqrt((self.dodge^2)/2)}
+				self.velocity = {x = self.velocity.x -math.sqrt((self.dodge^2)/2), y = self.velocity.y -math.sqrt((self.dodge^2)/2)}
 			
 			elseif state.faces == "NE" then
-				self.minVelocity.y = -math.sqrt((self.dodge^2)/2)
-				self.maxVelocity.x = math.sqrt((self.dodge^2)/2)
-				self.velocity = {x = math.sqrt((self.dodge^2)/2), y = -math.sqrt((self.dodge^2)/2)}
+				self.minVelocity.y = self.minVelocity.y -math.sqrt((self.dodge^2)/2)
+				self.maxVelocity.x = self.maxVelocity.y + math.sqrt((self.dodge^2)/2)
+				self.velocity = {x = self.velocity.x + math.sqrt((self.dodge^2)/2), y = self.velocity.y -math.sqrt((self.dodge^2)/2)}
 			
 			elseif state.faces == "SE" then
-				self.maxVelocity = {x = math.sqrt((self.dodge^2)/2), y = math.sqrt((self.dodge)/2)}
-				self.velocity = {x = math.sqrt((self.dodge^2)/2), y = math.sqrt((self.dodge^2)/2)}
+				self.maxVelocity = {x = self.maxVelocity.x + math.sqrt((self.dodge^2)/2), y = self.maxVelocity.x + math.sqrt((self.dodge^2)/2)}
+				self.velocity = {x = self.velocity.x + math.sqrt((self.dodge^2)/2), y = self.velocity.y + math.sqrt((self.dodge^2)/2)}
 			
 			elseif state.faces == "SW" then
-				self.minVelocity.x = -math.sqrt((self.dodge^2)/2)
-				self.maxVelocity.y = math.sqrt((self.dodge^2)/2)
-				self.velocity = {x = -math.sqrt((self.dodge^2)/2), y = math.sqrt((self.dodge^2)/2)}
+				self.minVelocity.x = self.minVelocity.x -math.sqrt((self.dodge^2)/2)
+				self.maxVelocity.y = self.maxVelocity.y + math.sqrt((self.dodge^2)/2)
+				self.velocity = {x = self.velocity.x -math.sqrt((self.dodge^2)/2), y = self.velocity.y + math.sqrt((self.dodge^2)/2)}
 			
 			end
 		end
