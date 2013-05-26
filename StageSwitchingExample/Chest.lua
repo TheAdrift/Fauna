@@ -6,7 +6,7 @@ Chest = Tile:extend
     image = 'mapobjects.png',
     imageOffset = { x = 32, y = 0 },
     onCollide = function (self, other)
-        if other:instanceOf(Hero) then
+        if other:instanceOf(BodyCollider) then
             if self.hasSword then
                 other.hasSword = true
                 the.view:flash({0, 255, 0}, 1)
