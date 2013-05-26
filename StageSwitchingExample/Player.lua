@@ -1,9 +1,10 @@
 require 'zoetrope'
 
--- A structure representing our intreped hero. 
+-- A structure representing our intreped hero. Who is now just a door.
 Hero = Tile:extend
 {
     image = 'mapobjects.png',
+    --[[
     onUpdate = function (self)
         self.velocity.x = 0
         self.velocity.y = 0
@@ -19,5 +20,5 @@ Hero = Tile:extend
         elseif the.keys:pressed('right') then
             self.velocity.x = 200
         end
-    end
+    end--]]
 }
