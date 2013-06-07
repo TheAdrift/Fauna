@@ -4,9 +4,9 @@ EndingView = View:extend
         local message
 
         if self.won then
-            message = 'Congratulations! You have slain the dragon.'
+            message = 'Congratulations! You reached the goal!'
         else
-            message = 'Sorry! The dragon ate you. Try looking for a sword.'
+            message = 'You fell to your death. :c'
         end
 
         self:add(Text:new{ x = 0, y = 300, width = the.app.width, text = message, align = 'center' })

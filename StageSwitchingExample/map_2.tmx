@@ -53,21 +53,5 @@
 1,1,1,1,1,1,1,1,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
 </data>
  </layer>
- <objectgroup name="objects" width="50" height="22">
-  <object name="Dragon" x="1387" y="504" width="64" height="64">
-   <properties>
-    <property name="_the" value="dragon"/>
-   </properties>
-  </object>
-  <object name="Hero" gid="4" x="288" y="128">
-   <properties>
-    <property name="_the" value="player"/>
-   </properties>
-  </object>
-  <object name="Chest" gid="5" x="927" y="511">
-   <properties>
-    <property name="hasSword" value="true"/>
-   </properties>
-  </object>
- </objectgroup>
+ <objectgroup name="objects" width="50" height="22"/>
 </map>

@@ -105,49 +105,7 @@ return {
       visible = true,
       opacity = 1,
       properties = {},
-      objects = {
-        {
-          name = "Dragon",
-          type = "",
-          shape = "rectangle",
-          x = 1387,
-          y = 504,
-          width = 64,
-          height = 64,
-          visible = true,
-          properties = {
-            ["_the"] = "dragon"
-          }
-        },
-        {
-          name = "Hero",
-          type = "",
-          shape = "rectangle",
-          x = 288,
-          y = 128,
-          width = 0,
-          height = 0,
-          gid = 4,
-          visible = true,
-          properties = {
-            ["_the"] = "player"
-          }
-        },
-        {
-          name = "Chest",
-          type = "",
-          shape = "rectangle",
-          x = 927,
-          y = 511,
-          width = 0,
-          height = 0,
-          gid = 5,
-          visible = true,
-          properties = {
-            ["hasSword"] = "true"
-          }
-        }
-      }
+      objects = {}
     }
   }
 }
