@@ -2,9 +2,13 @@ STRICT = true
 DEBUG = true
 
 require 'zoetrope'
-
+---[[
+require 'Body'
+--]]
 --a dictionary for KeyConstant strings. Not elegant, since the.keys:pressed
 --handles these directly, but a dictionary can be configured at runtime and passed to the.keys
+
+--[[
 push =
 {
 	up = "w",
@@ -18,7 +22,9 @@ push =
 	dash = "rshift",
 	dodge = "l"
 }
+--]]
 
+--[[
 --a dictionary for player state information.
 state =
 {
@@ -35,8 +41,10 @@ state =
 	--faces takes one of eight string vals: "N", "NE", "E", "SE", "S", "SW", "W", "NW"
 	faces = "S"
 }
+--]]
 
 --a dictionary for some default values we may like to reference.
+--[[
 default =
 {
 	accel = 1000,
@@ -44,8 +52,8 @@ default =
 	gravity = 1600, --downward acceleration while player is inAir.
 	jumpForce = 600, --upward force when player first jumps.
 	frict = 1280
-}
-
+} --]]
+--[[
 FloorCollider = Fill:extend
 {
 	width = 32,
@@ -161,7 +169,7 @@ FloorCollider = Fill:extend
 		end
 		
 		--Dodging
-		---[[
+		---
 		if state.isDodge then
 			--decrease friction for the duration of the dodge.
 			--self.drag = {x = self.drag.x*0.8, y = self.drag.y*0.8}
@@ -176,11 +184,11 @@ FloorCollider = Fill:extend
 				state.isDodge = false
 			end
 		end
-		--]]
+		--
 
 		--For now, I'm implementing dodge as a simple leap into whatever direction the player is facing.
 		--Later, I would like to try using key combinations for more robust behaviour.
-		---[[
+		---
 		if the.keys:justPressed (push.dodge) and not state.isDodge and not state.inAir then
 			state.isDodge = true
 			state.queue = .5
@@ -225,7 +233,7 @@ FloorCollider = Fill:extend
 			
 			end
 		end
-		--]]
+		--
 	end
 }
 
@@ -277,5 +285,14 @@ the.app = App:new
 		self:add(self.pFloor)
 		self.pBody = BodyCollider:new{x = 0, y = 0}
 		self:add(self.pBody)
+	end
+}
+--]]
+
+the.app = App:new
+{
+	onRun = function (self)
+		self.player = Player:new{start_x = 128, start_y = 128 }
+		self:add(self.player)
 	end
 }
